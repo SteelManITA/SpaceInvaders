@@ -8,8 +8,17 @@ public class Player : Spaceship
     ) : base (
         1000,
         100,
-        0.1f,
+        0.5f,
         100f
     ) {
+    }
+
+    public void powerUp() {
+        if (this.fireDelay - 0.05f > 0.1f) {
+            this.fireDelay = this.fireDelay - 0.05f;
+        } else {
+            this.attack += 25;
+        }
+        this.health = Mathf.Min(this.health + 50, this.totalHealth);
     }
 }

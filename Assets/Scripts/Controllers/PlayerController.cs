@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         this.state = GameState.getInstance();
 
         this.state.setPlayer(this.model);
-        InvokeRepeating("Shot", 0f, this.model.getFireDelay());
+        Invoke("Shot", 0f);
     }
 
     void Shot()
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
             this.shotSpawn.position,
             this.shotSpawn.rotation
         );
+        Invoke("Shot", this.model.getFireDelay());
     }
 
     void Update()
@@ -54,6 +55,8 @@ public class PlayerController : MonoBehaviour
             if (!this.model.isAlive()) {
                 Destroy(this.gameObject);
             }
+        } else if (other.tag == "PowerUp") {
+            this.model.powerUp();
         }
     }
 

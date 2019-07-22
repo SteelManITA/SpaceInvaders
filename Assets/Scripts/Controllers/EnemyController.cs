@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private GameState state;
 
     public GameObject shot;
+    public GameObject powerUp;
 
     void Move()
     {
@@ -60,6 +61,15 @@ public class EnemyController : MonoBehaviour
             this.model.hurt(this.state.getPlayer().getAttack());
             if (!this.model.isAlive()) {
                 this.state.incrementScore(100);
+
+                if (Random.value < this.model.getDropRate()) {
+                    Instantiate(
+                        this.powerUp,
+                        this.enemy.position,
+                        this.enemy.rotation
+                    );
+                }
+
                 Destroy(this.gameObject);
             }
         }

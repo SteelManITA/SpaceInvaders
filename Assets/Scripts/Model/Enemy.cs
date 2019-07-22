@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy : Spaceship
 {
+    private float dropRate = 0.1f;
+
     public Enemy(
         int level
     ) : base (
@@ -39,5 +41,9 @@ public class Enemy : Spaceship
     private static float setMovementSpeed(int level)
     {
         return 0.5f;
+    }
+
+    public float getDropRate() {
+        return this.dropRate;
     }
 }

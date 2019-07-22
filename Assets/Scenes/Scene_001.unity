@@ -970,10 +970,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca874a16ab82174d8ffaf62af02efae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
   shot: {fileID: 7527429204674327429, guid: 0090781aa7697a74ebc1330071b678a0, type: 3}
   shotSpawn: {fileID: 1513744598}
-  fireRate: 0.5
 --- !u!1 &1990009248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1004,7 +1002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce28b1bf6d30764a8a2a9850214884a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: 40
   enemy: {fileID: 7879894000050255070, guid: 6dfcb707e908f7341807b6d1d73a2174, type: 3}
 --- !u!4 &1990009250
 Transform:
