@@ -6,27 +6,26 @@ public class EnemyController : MonoBehaviour
 {
     private Transform enemy;
     private float minBound, maxBound;
-
+    private int direction = 1;
     private Enemy model;
+    private GameState state;
 
-    public float fireRate = 0.997f;
-    public float speed = 0.5f;
     public GameObject shot;
 
     void Move()
     {
-        this.enemy.position += Vector3.right * this.speed;
+        this.enemy.position += Vector3.right * (this.direction * this.model.getMovementSpeed());
 
         if (
             this.enemy.position.x < this.minBound
             || this.enemy.position.x > this.maxBound
         ) {
-            this.speed = -this.speed;
+            this.direction = -this.direction;
         }
 
         foreach (Transform enemy in this.enemy) {
             if (enemy.position.x < this.minBound || enemy.position.x > this.maxBound) {
-                this.speed = -this.speed;
+                this.direction = -this.direction;
                 return;
             }
 
@@ -35,28 +34,32 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        this.state = GameState.getInstance();
         this.enemy = GetComponent<Transform>();
         this.minBound = this.maxBound = this.enemy.position.x;
-        this.model = new Enemy();
+        int level = this.state.getLevel();
+        this.model = new Enemy(level);
         InvokeRepeating("Move", 3.0f, 1.0f);
+
+        float val = this.model.getFireDelay();
+        InvokeRepeating("Shot", 1.0f + Random.value * val, val);
+        this.state.setEnemyDamage(this.model.getAttack());
     }
 
-    void Update()
+    void Shot()
     {
-        if (Random.value > this.fireRate) {
-            Instantiate(
-                this.shot,
-                this.enemy.position,
-                this.enemy.rotation
-            );
-        }
+        Instantiate(
+            this.shot,
+            this.enemy.position,
+            this.enemy.rotation
+        );
     }
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "BulletPlayer") {
-            this.model.hurt(100);
+            this.model.hurt(this.state.getPlayer().getAttack());
             if (!this.model.isAlive()) {
-                GameState.getInstance().incrementScore(100);
+                this.state.incrementScore(100);
                 Destroy(this.gameObject);
             }
         }

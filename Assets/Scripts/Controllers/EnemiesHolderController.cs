@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemiesHolderController : MonoBehaviour
 {
     private Transform enemiesHolder;
+    private int enemies = 40;
 
-    public int enemies = 40;
     public GameObject enemy;
 
     void spawnEnemies() {
         for (int i = 0; i < this.enemies; ++i) {
-            var go = Instantiate(
+            Instantiate(
                 this.enemy,
                 this.enemiesHolder.position + new Vector3(i/5, i%5 * 1.5f, 0),
                 Quaternion.identity,

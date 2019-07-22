@@ -9,6 +9,7 @@ public class GameState
     private int score;
     private int level;
     private Player player;
+    private int enemyDamage;
 
     private GameState() {
         this.restart();
@@ -48,5 +49,13 @@ public class GameState
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public void setEnemyDamage(int damage) {
+        this.enemyDamage = damage;
+    }
+
+    public int getEnemyDamage() {
+        return this.enemyDamage;
     }
 }

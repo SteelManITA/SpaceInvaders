@@ -10,34 +10,38 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction;
     private GameState state;
     private float nextFire;
+    private Player model;
 
-    public float speed = 100f;
     public GameObject shot;
     public Transform shotSpawn;
-    public float fireRate;
-
 
     void Start()
     {
         this.player = GetComponent<Transform>();
         this.minBound = Constants.GetMinBoundX();
         this.maxBound = Constants.GetMaxBoundX();
+        this.model = new Player();
         this.state = GameState.getInstance();
 
-        this.state.setPlayer(new Player());
+        this.state.setPlayer(this.model);
+        InvokeRepeating("Shot", 0f, this.model.getFireDelay());
+    }
+
+    void Shot()
+    {
+        Instantiate(
+            this.shot,
+            this.shotSpawn.position,
+            this.shotSpawn.rotation
+        );
     }
 
     void Update()
     {
-        if (Time.time > this.nextFire) {
-            this.nextFire = Time.time + this.fireRate;
-            Instantiate(this.shot, this.shotSpawn.position, this.shotSpawn.rotation);
-        }
-
         if (Input.GetMouseButton(0)) {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             direction = (mousePosition - transform.position).normalized;
-            (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * speed, direction.y * speed);
+            (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
         } else {
             (GetComponent<Rigidbody2D>()).velocity = Vector2.zero;
         }
@@ -46,10 +50,8 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "BulletEnemy") {
-            Player player = this.state.getPlayer();
-
-            player.hurt(100);
-            if (!player.isAlive()) {
+            this.model.hurt(this.state.getEnemyDamage());
+            if (!this.model.isAlive()) {
                 Destroy(this.gameObject);
             }
         }

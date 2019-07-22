@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletEnemyController : MonoBehaviour
 {
     private Transform bullet;
-    public float speed;
+    private float speed = 0.1f;
 
     void Start()
     {
