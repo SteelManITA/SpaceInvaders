@@ -24,17 +24,19 @@ public class PlayerController : MonoBehaviour
         this.state = GameState.getInstance();
 
         this.state.setPlayer(this.model);
-        Invoke("Shot", 0f);
+        StartCoroutine("Shot");
     }
 
-    void Shot()
+    IEnumerator Shot()
     {
-        Instantiate(
-            this.shot,
-            this.shotSpawn.position,
-            this.shotSpawn.rotation
-        );
-        Invoke("Shot", this.model.getFireDelay());
+        while (true) {
+            Instantiate(
+                this.shot,
+                this.shotSpawn.position,
+                this.shotSpawn.rotation
+            );
+            yield return new WaitForSeconds(this.model.getFireDelay());
+        }
     }
 
     void Update()

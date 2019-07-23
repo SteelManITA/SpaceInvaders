@@ -6,54 +6,54 @@ public class EnemyController : MonoBehaviour
 {
     private Transform enemy;
     private float minBound, maxBound;
-    private int direction = 1;
     private Enemy model;
     private GameState state;
 
     public GameObject shot;
     public GameObject powerUp;
 
-    void Move()
-    {
-        this.enemy.position += Vector3.right * (this.direction * this.model.getMovementSpeed());
-
-        if (
-            this.enemy.position.x < this.minBound
-            || this.enemy.position.x > this.maxBound
-        ) {
-            this.direction = -this.direction;
-        }
-
-        foreach (Transform enemy in this.enemy) {
-            if (enemy.position.x < this.minBound || enemy.position.x > this.maxBound) {
-                this.direction = -this.direction;
-                return;
-            }
-
-        }
-    }
-
     void Start()
     {
         this.state = GameState.getInstance();
         this.enemy = GetComponent<Transform>();
         this.minBound = this.maxBound = this.enemy.position.x;
-        int level = this.state.getLevel();
-        this.model = new Enemy(level);
-        InvokeRepeating("Move", 3.0f, 1.0f);
-
-        float val = this.model.getFireDelay();
-        InvokeRepeating("Shot", 1.0f + Random.value * val, val);
+        this.model = new Enemy(this.state.getLevel());
         this.state.setEnemyDamage(this.model.getAttack());
+        StartCoroutine("Move");
+        StartCoroutine("Shot");
     }
 
-    void Shot()
+    IEnumerator Shot()
     {
-        Instantiate(
-            this.shot,
-            this.enemy.position,
-            this.enemy.rotation
-        );
+        yield return new WaitForSeconds(1.0f + Random.value * this.model.getFireDelay());
+        while (true) {
+            Instantiate(
+                this.shot,
+                this.enemy.position,
+                this.enemy.rotation
+            );
+            yield return new WaitForSeconds(this.model.getFireDelay());
+        }
+    }
+
+    IEnumerator Move()
+    {
+        int direction = 1;
+
+        yield return new WaitForSeconds(3.0f);
+
+        while (true) {
+            this.enemy.position += Vector3.right * (direction * this.model.getMovementSpeed());
+
+            if (
+                this.enemy.position.x < this.minBound
+                || this.enemy.position.x > this.maxBound
+            ) {
+                direction = -direction;
+            }
+
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -70,6 +70,7 @@ public class EnemyController : MonoBehaviour
                     );
                 }
 
+                StopAllCoroutines();
                 Destroy(this.gameObject);
             }
         }
