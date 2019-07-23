@@ -115,14 +115,37 @@ public class PlayerController : MonoBehaviour
         controller.tag = "BulletPlayer";
     }
 
+    private Vector3 lastAcceleration = Vector3.right;
+
     void Update()
     {
-        if (Input.GetMouseButton(0)) {
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = (mousePosition - transform.position).normalized;
-            (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
+        bool accelerometer = true;
+
+        if (accelerometer) {
+            Vector3 acceleration = Input.acceleration * 0.3f;
+            (GetComponent<Rigidbody2D>()).velocity = new Vector2(acceleration.x * this.model.getMovementSpeed(), acceleration.y * this.model.getMovementSpeed());
+
         } else {
-            (GetComponent<Rigidbody2D>()).velocity = Vector2.zero;
+            if (Input.GetMouseButton(0)) {
+                Debug.Log("input mousebutton");
+                mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                direction = (mousePosition - transform.position).normalized;
+                (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
+            } else {
+                (GetComponent<Rigidbody2D>()).velocity = Vector2.zero;
+            }
+        }
+
+        if (
+            this.player.position.x < this.minBound
+            || this.player.position.x > this.maxBound
+        ) {
+            Debug.Log(Vector3.left + " " + this.maxBound + " " + Vector3.left * this.maxBound);
+            this.player.position = new Vector3(
+                this.player.position.x < this.minBound ? this.minBound : this.maxBound,
+                this.player.position.y,
+                this.player.position.z
+            );
         }
     }
 
