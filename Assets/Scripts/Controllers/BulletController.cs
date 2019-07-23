@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,12 @@ public class BulletController : MonoBehaviour
     {
         this.bullet.position += Vector3.up * this.speed;
 
-        if (this.bullet.position.y <= Constants.GetMinBoundY()) {
+        if (
+            this.bullet.position.y <= Constants.GetMinBoundY()
+            || this.bullet.position.y >= Constants.GetMaxBoundY()
+            || this.bullet.position.x <= Constants.GetMinBoundX()
+            || this.bullet.position.x >= Constants.GetMaxBoundX()
+        ) {
             Destroy(this.gameObject);
         }
     }
