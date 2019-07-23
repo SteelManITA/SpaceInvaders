@@ -37,14 +37,60 @@ public class PlayerController : MonoBehaviour
                 case Player.ShotType.linear: {
                     position = transform.position;
                     rotation = transform.rotation;
+                    this.InstantiateShot(position, rotation, this.model.getAttack());
                     break;
                 }
                 case Player.ShotType.radius: {
+                    // TODO: fix diagonal shot
+                    int powerUp = this.model.getPowerUpCount();
+                    int shots = Mathf.Min(3 + powerUp * 2, 11);
+                    int damagePerShot = this.model.getAttack() / shots;
+                    Debug.Log("radius " + powerUp + " " + shots + " " + damagePerShot);
+                    for (int i = 0; i < shots; ++i) {
+                        rotation = transform.rotation;
 
+                        if (i == 0) {
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                            continue;
+                        }
+
+                        if (i % 2 == 0) {
+                            int offset = i/2;
+                            rotation.z = 9f * offset;
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                            // ruota a sinistra
+                        } else if (i % 2 != 0) {
+                            int offset = i/2;
+                            rotation.z = 9f * -offset;
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                            // ruota a destra
+                        }
+                    }
                     break;
                 }
                 case Player.ShotType.wall: {
+                    int powerUp = this.model.getPowerUpCount();
+                    int shots = Mathf.Min(3 + powerUp * 2, 9);
+                    int damagePerShot = this.model.getAttack() / shots;
+                    Debug.Log("radius " + powerUp + " " + shots + " " + damagePerShot);
+                    for (int i = 0; i < shots; ++i) {
+                        position = transform.position;
 
+                        if (i == 0) {
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                            continue;
+                        }
+
+                        if (i % 2 == 0) {
+                            int offset = i/2;
+                            position.x += offset * 0.2f;
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                        } else if (i % 2 != 0) {
+                            int offset = i/2 + 1;
+                            position.x -= offset * 0.2f;
+                            this.InstantiateShot(position, rotation, damagePerShot);
+                        }
+                    }
                     break;
                 }
                 default: {
@@ -52,19 +98,21 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            GameObject shotInstance = Instantiate(
-                this.shot,
-                position,
-                rotation
-            );
-            shotInstance.GetComponent<Renderer>().material.color = Color.green;
-            BulletController controller = shotInstance.GetComponent<BulletController>();
-            controller.setDamage(this.model.getAttack());
-            controller.setSpeed(0.3f);
-            controller.tag = "BulletPlayer";
-
             yield return new WaitForSeconds(this.model.getFireDelay());
         }
+    }
+
+    private void InstantiateShot(Vector3 position, Quaternion rotation, int damage) {
+        GameObject shotInstance = Instantiate(
+            this.shot,
+            position,
+            rotation
+        );
+        shotInstance.GetComponent<Renderer>().material.color = Color.green;
+        BulletController controller = shotInstance.GetComponent<BulletController>();
+        controller.setDamage(damage);
+        controller.setSpeed(0.3f);
+        controller.tag = "BulletPlayer";
     }
 
     void Update()
