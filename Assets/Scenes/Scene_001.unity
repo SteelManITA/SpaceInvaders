@@ -970,8 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca874a16ab82174d8ffaf62af02efae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 7527429204674327429, guid: 0090781aa7697a74ebc1330071b678a0, type: 3}
-  shotSpawn: {fileID: 1513744598}
+  shot: {fileID: 8667814580984324995, guid: b754d96accc1ff7498fb4eea5e14b3b7, type: 3}
 --- !u!1 &1990009248
 GameObject:
   m_ObjectHideFlags: 0

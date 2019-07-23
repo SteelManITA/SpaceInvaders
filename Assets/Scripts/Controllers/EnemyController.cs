@@ -27,11 +27,17 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(1.0f + Random.value * this.model.getFireDelay());
         while (true) {
-            Instantiate(
+            GameObject shotInstance = Instantiate(
                 this.shot,
                 this.enemy.position,
                 this.enemy.rotation
             );
+            shotInstance.GetComponent<Renderer>().material.color = Color.red;
+            BulletController controller = shotInstance.GetComponent<BulletController>();
+            controller.setDamage(this.model.getAttack());
+            controller.setSpeed(-0.1f);
+            controller.tag = "BulletEnemy";
+
             yield return new WaitForSeconds(this.model.getFireDelay());
         }
     }

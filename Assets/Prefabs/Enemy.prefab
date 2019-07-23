@@ -139,5 +139,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441a21c9ab6788c48a0152c044b10853, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 2766461742217393863, guid: 321a338eeb3c732459bb921b1791293d, type: 3}
+  shot: {fileID: 8667814580984324995, guid: b754d96accc1ff7498fb4eea5e14b3b7, type: 3}
   powerUp: {fileID: 9078587263849462929, guid: 78526654979cfa748b90c4759c391e76, type: 3}

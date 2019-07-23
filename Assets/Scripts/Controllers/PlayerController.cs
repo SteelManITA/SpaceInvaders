@@ -52,11 +52,17 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            Instantiate(
+            GameObject shotInstance = Instantiate(
                 this.shot,
                 position,
                 rotation
             );
+            shotInstance.GetComponent<Renderer>().material.color = Color.green;
+            BulletController controller = shotInstance.GetComponent<BulletController>();
+            controller.setDamage(this.model.getAttack());
+            controller.setSpeed(0.3f);
+            controller.tag = "BulletPlayer";
+
             yield return new WaitForSeconds(this.model.getFireDelay());
         }
     }
@@ -75,7 +81,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "BulletEnemy") {
-            this.model.hurt(this.state.getEnemyDamage());
+            this.model.hurt(other.gameObject.GetComponent<BulletController>().getDamage());
             if (!this.model.isAlive()) {
                 Destroy(this.gameObject);
             }
