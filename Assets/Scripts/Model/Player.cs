@@ -11,6 +11,7 @@ public class Player : Spaceship
         0.5f,
         100f
     ) {
+        // TODO: set this.type according to PlayerPref
     }
 
     public void powerUp() {

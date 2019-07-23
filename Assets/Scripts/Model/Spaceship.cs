@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Spaceship
 {
+    public enum ShotType {
+        linear=1,
+        radius=2,
+        wall=3
+    }
+	protected ShotType shotType;
     protected int health;
     protected int totalHealth;
     protected int attack;
@@ -20,6 +26,7 @@ public class Spaceship
         this.attack = attack;
         this.fireDelay = fireDelay;
         this.movementSpeed = movementSpeed;
+        this.shotType = ShotType.linear;
     }
 
     public void hurt(int damages) {
@@ -51,5 +58,9 @@ public class Spaceship
 
     public int getAttack() {
         return this.attack;
+    }
+
+    public ShotType getShotType() {
+        return this.shotType;
     }
 }

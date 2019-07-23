@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     private Player model;
 
     public GameObject shot;
-    public Transform shotSpawn;
 
     void Start()
     {
@@ -30,10 +29,33 @@ public class PlayerController : MonoBehaviour
     IEnumerator Shot()
     {
         while (true) {
+            Player.ShotType shotType = this.model.getShotType();
+            Vector3 position = transform.position;
+            Quaternion rotation = transform.rotation;
+
+            switch (shotType) {
+                case Player.ShotType.linear: {
+                    position = transform.position;
+                    rotation = transform.rotation;
+                    break;
+                }
+                case Player.ShotType.radius: {
+
+                    break;
+                }
+                case Player.ShotType.wall: {
+
+                    break;
+                }
+                default: {
+                    throw new System.Exception("ShotTypeError: unrecognized ShotType");
+                }
+            }
+
             Instantiate(
                 this.shot,
-                this.shotSpawn.position,
-                this.shotSpawn.rotation
+                position,
+                rotation
             );
             yield return new WaitForSeconds(this.model.getFireDelay());
         }
