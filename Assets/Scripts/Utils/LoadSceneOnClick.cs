@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Continue : MonoBehaviour
+public class LoadSceneOnClick : MonoBehaviour
 {
     private Button continueBtn;
+
+    public string scene = "MainMenu";
 
     void Start()
     {
@@ -16,6 +18,6 @@ public class Continue : MonoBehaviour
 
     void OnContinueBtnClick()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene(this.scene);
     }
 }
