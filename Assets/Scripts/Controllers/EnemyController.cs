@@ -30,9 +30,21 @@ public class EnemyController : MonoBehaviour
         GetComponent<Rigidbody2D>().UpdateWithGameStatus();
     }
 
+    IEnumerator WaitForShot(float time)
+    {
+        while (time > 0) {
+            while (GameState.getInstance().getState() != GameState.State.Started) {
+                yield return new WaitForSeconds(0.2f);
+            }
+            time -= 0.2f;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     IEnumerator Shot()
     {
-        yield return new WaitForSeconds(1.0f + Random.value * this.model.getFireDelay());
+        yield return WaitForShot(1.0f + Random.value * this.model.getFireDelay());
+
         while (true) {
             GameObject shotInstance = Instantiate(
                 this.shot,
@@ -45,7 +57,7 @@ public class EnemyController : MonoBehaviour
             controller.setSpeed(-0.1f);
             controller.tag = "BulletEnemy";
 
-            yield return new WaitForSeconds(this.model.getFireDelay());
+            yield return WaitForShot(this.model.getFireDelay());
         }
     }
 
