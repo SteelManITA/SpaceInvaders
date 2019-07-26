@@ -52,12 +52,8 @@ public class StorageSpaceship
         StorageSpaceship[] spaceships = StorageSpaceship.GetAll();
 
         // search element in spaceships
-        for (int i = 0; i < spaceships.Length; ++i) {
-            if (spaceships[i].name == spaceship.name) {
-                spaceships[i] = spaceship;
-                break;
-            }
-        }
+        int i = StorageSpaceship.GetIndex(spaceship.name);
+        spaceships[i] = spaceship;
 
         // replace element in spaceships
         string json = JsonHelper.ToJson(spaceships, true);
@@ -75,5 +71,23 @@ public class StorageSpaceship
         }
 
         return JsonHelper.FromJson<StorageSpaceship>(spaceshipsString);
+    }
+
+    public static int GetIndex(string name)
+    {
+        StorageSpaceship[] spaceships = StorageSpaceship.GetAll();
+        for (int i = 0; i < spaceships.Length; ++i) {
+            if (spaceships[i].name == name) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static StorageSpaceship Get(string name)
+    {
+        StorageSpaceship[] spaceships = StorageSpaceship.GetAll();
+        int i = StorageSpaceship.GetIndex(name);
+        return i != -1 ? spaceships[i] : null;
     }
 }

@@ -7,8 +7,8 @@ public class SpaceShooter : Spaceship, IPlayer
     private int powerUpCount = 0;
     public SpaceShooter(
     ) : base (
-        1000,
-        100,
+        1000 + StorageSpaceship.Get("SpaceShooter").healthPowerUpsCount * 100,
+        100 + StorageSpaceship.Get("SpaceShooter").attackPowerUpsCount * 25,
         0.5f,
         100f
     ) {
