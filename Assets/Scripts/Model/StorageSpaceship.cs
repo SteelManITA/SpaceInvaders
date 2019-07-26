@@ -12,15 +12,21 @@ public class StorageSpaceship
     public int attackPowerUpsCount;
     public int healthPowerUpsMax = 10;
     public int attackPowerUpsMax = 10;
+    public int purchaseCost;
+    public bool purchased = false;
 
     public StorageSpaceship(
         string name,
         int healthPowerUpsCount,
-        int attackPowerUpsCount
+        int attackPowerUpsCount,
+        int purchaseCost,
+        bool purchased
     ) {
         this.name = name;
         this.healthPowerUpsCount = healthPowerUpsCount;
         this.attackPowerUpsCount = attackPowerUpsCount;
+        this.purchaseCost = purchaseCost;
+        this.purchased = purchased;
     }
 
     private static StorageSpaceship[] Load()
@@ -32,7 +38,9 @@ public class StorageSpaceship
             spaceships[i] = new StorageSpaceship(
                 spaceshipTypes[i],
                 0,
-                0
+                0,
+                i * 100000,
+                i == 0 ? true : false
             );
         }
 

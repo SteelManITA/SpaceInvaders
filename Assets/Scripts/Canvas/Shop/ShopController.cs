@@ -22,6 +22,10 @@ public class ShopController : MonoBehaviour
     public Text spaceshipName;
     public Button selectSpaceship;
 
+    public GameObject detailsContainer;
+    public GameObject purchaseContainer;
+    public Button purchase;
+
     public Text healthPrice;
     public Button boostHealth;
     public Text attackPrice;
@@ -45,6 +49,7 @@ public class ShopController : MonoBehaviour
         this.spaceshipName.text = spaceship.name;
         this.healthPrice.text = this.calcPowerupCost(spaceship.healthPowerUpsCount).ToString("N0");
         this.attackPrice.text = this.calcPowerupCost(spaceship.attackPowerUpsCount).ToString("N0");
+        this.purchase.GetComponentInChildren<Text>().text = spaceship.purchaseCost.ToString("N0");
 
         this.FillPowerUpIndicator(
             this.healthIndicatorContainer,
@@ -90,6 +95,15 @@ public class ShopController : MonoBehaviour
                 )
             );
         this.selectSpaceship.GetComponentInChildren<Text>().text = this.selectSpaceship.enabled ? "Use this Spaceship" : "Already in use";
+        {
+            this.selectSpaceship.GetComponent<CanvasGroup>().alpha =
+                this.detailsContainer.GetComponent<CanvasGroup>().alpha = spaceship.purchased ? 1f : 0f;
+            this.purchaseContainer.GetComponent<CanvasGroup>().alpha = !spaceship.purchased ? 1f : 0f;
+
+            this.selectSpaceship.GetComponent<CanvasGroup>().blocksRaycasts =
+                this.detailsContainer.GetComponent<CanvasGroup>().blocksRaycasts = spaceship.purchased;
+            this.purchaseContainer.GetComponent<CanvasGroup>().blocksRaycasts = !spaceship.purchased;
+        }
 
         this.boostHealth.enabled = spaceship.healthPowerUpsCount != spaceship.healthPowerUpsMax;
         this.boostAttack.enabled = spaceship.attackPowerUpsCount != spaceship.attackPowerUpsMax;
@@ -111,6 +125,14 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetString("SpaceshipType", this.spaceships[this.currentIndex].name);
         PlayerPrefs.Save();
+        this.UpdateView();
+    }
+    private void OnPurchaseClick()
+    {
+        StorageSpaceship spaceship = this.spaceships[this.currentIndex];
+        spaceship.purchased = true;
+
+        StorageSpaceship.Write(spaceship);
         this.UpdateView();
     }
 
@@ -142,6 +164,7 @@ public class ShopController : MonoBehaviour
         this.prev.onClick.AddListener(delegate {OnPrevClick(); });
 
         this.selectSpaceship.onClick.AddListener(delegate {OnSelectSpaceshipClick(); });
+        this.purchase.onClick.AddListener(delegate {OnPurchaseClick(); });
 
         this.boostHealth.onClick.AddListener(delegate {OnBoostClick(Property.Health); });
         this.boostAttack.onClick.AddListener(delegate {OnBoostClick(Property.Attack); });
