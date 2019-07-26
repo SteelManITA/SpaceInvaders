@@ -16,7 +16,7 @@ public class ToggleSettings : MonoBehaviour
             throw new System.Exception("Error: Mising prop");
         }
         this.toggle = GetComponent<Toggle>();
-        this.toggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt(this.prop, 0));
+        this.toggle.isOn = Convert.ToBoolean(PlayerPrefs.GetInt(this.prop, 1));
         this.toggle.onValueChanged.AddListener(delegate {OnToggleValueChanged(); });
     }
 

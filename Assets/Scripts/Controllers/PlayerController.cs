@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody2D>().UpdateWithGameStatus();
 
         if (GameState.getInstance().getState() == GameState.State.Started) {
-            bool accelerometer = Convert.ToBoolean(PlayerPrefs.GetInt("Accelerometer", 0));
+            bool accelerometer = Convert.ToBoolean(PlayerPrefs.GetInt("Accelerometer", 1));
 
             if (accelerometer) {
                 Vector3 acceleration = Input.acceleration * 0.3f;
