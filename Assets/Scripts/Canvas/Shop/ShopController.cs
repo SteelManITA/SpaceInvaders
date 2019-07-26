@@ -15,6 +15,7 @@ public class ShopController : MonoBehaviour
     }
     private StorageSpaceship[] spaceships;
     private int currentIndex;
+    private int credit;
 
     public Button next;
     public Button prev;
@@ -127,11 +128,15 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.Save();
         this.UpdateView();
     }
+
     private void OnPurchaseClick()
     {
         StorageSpaceship spaceship = this.spaceships[this.currentIndex];
+        if (this.credit < spaceship.purchaseCost) {
+            return;
+        }
         spaceship.purchased = true;
-
+        this.credit -= spaceship.purchaseCost;
         StorageSpaceship.Write(spaceship);
         this.UpdateView();
     }
@@ -141,12 +146,22 @@ public class ShopController : MonoBehaviour
         StorageSpaceship spaceship = this.spaceships[this.currentIndex];
 
         switch (p) {
-            case Property.Health:
+            case Property.Health: {
+                int boostCost = this.calcPowerupCost(spaceship.healthPowerUpsCount);
+                if (this.credit < boostCost) {
+                    return;
+                }
                 ++spaceship.healthPowerUpsCount;
                 break;
-            case Property.Attack:
+            }
+            case Property.Attack: {
+                int boostCost = this.calcPowerupCost(spaceship.attackPowerUpsCount);
+                if (this.credit < boostCost) {
+                    return;
+                }
                 ++spaceship.attackPowerUpsCount;
                 break;
+            }
             default:
                 throw new System.Exception("Error: Mising property");
         }
@@ -159,6 +174,7 @@ public class ShopController : MonoBehaviour
     {
         this.spaceships = StorageSpaceship.GetAll();
         this.currentIndex = 0;
+        this.credit = PlayerPrefs.GetInt("Credits", 0);
 
         this.next.onClick.AddListener(delegate {OnNextClick(); });
         this.prev.onClick.AddListener(delegate {OnPrevClick(); });
