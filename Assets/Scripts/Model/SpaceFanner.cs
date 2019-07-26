@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Spaceship
+public class SpaceFanner : Spaceship, IPlayer
 {
     private int powerUpCount = 0;
-    public Player(
+    public SpaceFanner(
     ) : base (
         1000,
         100,
         0.5f,
         100f
     ) {
-        // TODO: set this.type according to PlayerPref
-        this.shotType = ShotType.linear;
+        this.shotType = ShotType.radial;
     }
 
     public void powerUp() {

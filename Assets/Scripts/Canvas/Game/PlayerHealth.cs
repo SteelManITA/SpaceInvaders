@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        Player player = GameState.getInstance().getPlayer();
+        IPlayer player = GameState.getInstance().getPlayer();
         int health = player.getHealth();
         int totalHealth = player.getTotalHealth();
         this.playerHealthText.text = health + " / " + totalHealth + " HP";

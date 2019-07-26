@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 direction;
     private GameState state;
     private float nextFire;
-    private Player model;
+    private IPlayer model;
 
     public GameObject shot;
 
@@ -20,7 +20,19 @@ public class PlayerController : MonoBehaviour
         this.player = GetComponent<Transform>();
         this.minBound = Constants.GetMinBoundX();
         this.maxBound = Constants.GetMaxBoundX();
-        this.model = new Player();
+
+        this.model = (IPlayer) Activator.CreateInstance(
+            Type.GetType(
+                PlayerPrefs.GetString(
+                    "SpaceshipType",
+                    Enum.GetName(
+                        typeof(SpaceshipType),
+                        SpaceshipType.SpaceShooter
+                    )
+                )
+            )
+        );
+
         this.state = GameState.getInstance();
 
         this.state.setPlayer(this.model);
@@ -30,18 +42,18 @@ public class PlayerController : MonoBehaviour
     IEnumerator Shot()
     {
         while (true) {
-            Player.ShotType shotType = this.model.getShotType();
+            ShotType shotType = this.model.getShotType();
             Vector3 position = transform.position;
             Quaternion rotation = transform.rotation;
 
             switch (shotType) {
-                case Player.ShotType.linear: {
+                case ShotType.linear: {
                     position = transform.position;
                     rotation = transform.rotation;
                     this.InstantiateShot(position, rotation, this.model.getAttack());
                     break;
                 }
-                case Player.ShotType.radial: {
+                case ShotType.radial: {
                     int powerUp = this.model.getPowerUpCount();
                     int shots = Mathf.Min(3 + powerUp * 2, 11);
                     int damagePerShot = this.model.getAttack() / shots;
@@ -63,7 +75,7 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 }
-                case Player.ShotType.wall: {
+                case ShotType.wall: {
                     int powerUp = this.model.getPowerUpCount();
                     int shots = Mathf.Min(3 + powerUp * 2, 9);
                     int damagePerShot = this.model.getAttack() / shots;

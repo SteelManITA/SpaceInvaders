@@ -8,7 +8,7 @@ public class GameState
 
     private int score;
     private int level;
-    private Player player;
+    private IPlayer player;
     private int enemyDamage;
 
     public enum State {
@@ -50,11 +50,11 @@ public class GameState
         return this.level;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(IPlayer player) {
         this.player = player;
     }
 
-    public Player getPlayer() {
+    public IPlayer getPlayer() {
         return this.player;
     }
 

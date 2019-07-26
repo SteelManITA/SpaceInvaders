@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spaceship
+public class Spaceship : ISpaceship
 {
-    public enum ShotType {
-        linear=1,
-        radial=2,
-        wall=3
-    }
 	protected ShotType shotType;
     protected int health;
     protected int totalHealth;
     protected int attack;
     protected float fireDelay; // shoot per second
     protected float movementSpeed;
+
+    public Spaceship(
+    ) {
+        this.shotType = ShotType.linear;
+    }
 
     public Spaceship(
         int totalHealth,
