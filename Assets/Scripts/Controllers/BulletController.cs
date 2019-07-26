@@ -18,7 +18,14 @@ public class BulletController : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().UpdateWithGameStatus();
 
-        (GetComponent<Rigidbody2D>()).velocity = new Vector2(0f, 50f * this.speed);
+        float constVal = 50f * this.speed;
+
+        float angle = Mathf.Deg2Rad * ((GetComponent<Rigidbody2D>()).rotation - 90);
+
+        (GetComponent<Rigidbody2D>()).velocity = new Vector2(
+            Mathf.Cos(angle) * constVal,
+            Mathf.Sin(angle) * constVal
+        );
 
         if (
             this.bullet.position.y <= Constants.GetMinBoundY()

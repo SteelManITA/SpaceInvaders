@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour
             shotInstance.GetComponent<Renderer>().material.color = Color.red;
             BulletController controller = shotInstance.GetComponent<BulletController>();
             controller.setDamage(this.model.getAttack());
-            controller.setSpeed(-0.1f);
+            controller.setSpeed(0.1f);
             controller.tag = "BulletEnemy";
 
             yield return WaitForShot(this.model.getFireDelay());

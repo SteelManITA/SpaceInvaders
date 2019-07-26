@@ -42,29 +42,23 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
                 case Player.ShotType.radius: {
-                    // TODO: fix diagonal shot
                     int powerUp = this.model.getPowerUpCount();
                     int shots = Mathf.Min(3 + powerUp * 2, 11);
                     int damagePerShot = this.model.getAttack() / shots;
-                    Debug.Log("radius " + powerUp + " " + shots + " " + damagePerShot);
                     for (int i = 0; i < shots; ++i) {
-                        rotation = transform.rotation;
-
                         if (i == 0) {
-                            this.InstantiateShot(position, rotation, damagePerShot);
+                            this.InstantiateShot(position, transform.rotation, damagePerShot);
                             continue;
                         }
 
                         if (i % 2 == 0) {
                             int offset = i/2;
-                            rotation.z = 9f * offset;
-                            this.InstantiateShot(position, rotation, damagePerShot);
-                            // ruota a sinistra
+                            Vector3 rotationVector = new Vector3(0, 0, transform.eulerAngles.z + (2f * offset));
+                            this.InstantiateShot(position, Quaternion.Euler(rotationVector), damagePerShot);
                         } else if (i % 2 != 0) {
-                            int offset = i/2;
-                            rotation.z = 9f * -offset;
-                            this.InstantiateShot(position, rotation, damagePerShot);
-                            // ruota a destra
+                            int offset = (i+1)/2;
+                            Vector3 rotationVector = new Vector3(0, 0, transform.eulerAngles.z - (2f * offset));
+                            this.InstantiateShot(position, Quaternion.Euler(rotationVector), damagePerShot);
                         }
                     }
                     break;
@@ -73,7 +67,6 @@ public class PlayerController : MonoBehaviour
                     int powerUp = this.model.getPowerUpCount();
                     int shots = Mathf.Min(3 + powerUp * 2, 9);
                     int damagePerShot = this.model.getAttack() / shots;
-                    Debug.Log("radius " + powerUp + " " + shots + " " + damagePerShot);
                     for (int i = 0; i < shots; ++i) {
                         position = transform.position;
 
@@ -112,7 +105,7 @@ public class PlayerController : MonoBehaviour
         shotInstance.GetComponent<Renderer>().material.color = Color.green;
         BulletController controller = shotInstance.GetComponent<BulletController>();
         controller.setDamage(damage);
-        controller.setSpeed(0.3f);
+        controller.setSpeed(-0.3f);
         controller.tag = "BulletPlayer";
         SoundManager.getInstance().Shot();
     }
@@ -146,7 +139,6 @@ public class PlayerController : MonoBehaviour
             this.player.position.x < this.minBound
             || this.player.position.x > this.maxBound
         ) {
-            Debug.Log(Vector3.left + " " + this.maxBound + " " + Vector3.left * this.maxBound);
             this.player.position = new Vector3(
                 this.player.position.x < this.minBound ? this.minBound : this.maxBound,
                 this.player.position.y,
