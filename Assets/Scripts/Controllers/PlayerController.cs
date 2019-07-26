@@ -37,6 +37,15 @@ public class PlayerController : MonoBehaviour
 
         this.state.setPlayer(this.model);
         this.StartGameCoroutine(Shot());
+        this.StartGameCoroutine(Timer());
+    }
+
+    IEnumerator Timer()
+    {
+        while (true) {
+            yield return new WaitForSeconds(0.1f);
+            this.state.incrementTime(0.1f);
+        }
     }
 
     IEnumerator Shot()

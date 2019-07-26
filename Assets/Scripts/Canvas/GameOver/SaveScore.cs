@@ -30,7 +30,7 @@ public class SaveScore : MonoBehaviour
                     this.username.text,
                     this.state.getScore(),
                     this.state.getLevel(),
-                    0
+                    this.state.getTime()
                 )
             );
             PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits", 0) + this.state.getScore());

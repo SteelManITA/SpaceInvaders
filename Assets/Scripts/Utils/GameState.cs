@@ -9,6 +9,7 @@ public class GameState
     private int score;
     private int level;
     private IPlayer player;
+    private float time;
     private int enemyDamage;
 
     public enum State {
@@ -29,6 +30,7 @@ public class GameState
     public void restart() {
         this.score = 0;
         this.level = 1;
+        this.time = 0f;
     }
 
     public void incrementScore(int score) {
@@ -36,6 +38,10 @@ public class GameState
             score = -score;
         }
         this.score += score;
+    }
+
+    public void incrementTime(float time) {
+        this.time += time;
     }
 
     public int getScore() {
@@ -48,6 +54,10 @@ public class GameState
 
     public int getLevel() {
         return this.level;
+    }
+
+    public float getTime() {
+        return this.time;
     }
 
     public void setPlayer(IPlayer player) {

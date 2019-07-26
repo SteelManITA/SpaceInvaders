@@ -32,7 +32,7 @@ public class RankListController : MonoBehaviour
             itemDetails.playerName.text = rankings[i].playerName;
             itemDetails.score.text = "Score: " + rankings[i].score;
             itemDetails.level.text = "Level: " + rankings[i].level;
-            itemDetails.time.text = "Time: " + rankings[i].time;
+            itemDetails.time.text = "Time: " + Utils.TimeToString(rankings[i].time);
         }
 	}
 }
