@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
                     this.InstantiateShot(position, rotation, this.model.getAttack());
                     break;
                 }
-                case Player.ShotType.radius: {
+                case Player.ShotType.radial: {
                     int powerUp = this.model.getPowerUpCount();
                     int shots = Mathf.Min(3 + powerUp * 2, 11);
                     int damagePerShot = this.model.getAttack() / shots;

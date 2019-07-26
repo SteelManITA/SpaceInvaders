@@ -6,7 +6,7 @@ public class Spaceship
 {
     public enum ShotType {
         linear=1,
-        radius=2,
+        radial=2,
         wall=3
     }
 	protected ShotType shotType;
