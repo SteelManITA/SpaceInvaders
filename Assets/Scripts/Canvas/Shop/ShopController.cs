@@ -20,6 +20,7 @@ public class ShopController : MonoBehaviour
     public Button prev;
     public RectTransform spaceshipImage;
     public Text spaceshipName;
+    public Button selectSpaceship;
 
     public Text healthPrice;
     public Button boostHealth;
@@ -79,6 +80,17 @@ public class ShopController : MonoBehaviour
 
         this.next.enabled = this.currentIndex != this.spaceships.Length - 1;
         this.prev.enabled = this.currentIndex != 0;
+
+        this.selectSpaceship.enabled =
+            spaceship.name != PlayerPrefs.GetString(
+                "SpaceshipType",
+                Enum.GetName(
+                    typeof(SpaceshipType),
+                    SpaceshipType.SpaceShooter
+                )
+            );
+        this.selectSpaceship.GetComponentInChildren<Text>().text = this.selectSpaceship.enabled ? "Use this Spaceship" : "Already in use";
+
         this.boostHealth.enabled = spaceship.healthPowerUpsCount != spaceship.healthPowerUpsMax;
         this.boostAttack.enabled = spaceship.attackPowerUpsCount != spaceship.attackPowerUpsMax;
     }
@@ -92,6 +104,13 @@ public class ShopController : MonoBehaviour
     private void OnPrevClick()
     {
         --this.currentIndex;
+        this.UpdateView();
+    }
+
+    private void OnSelectSpaceshipClick()
+    {
+        PlayerPrefs.SetString("SpaceshipType", this.spaceships[this.currentIndex].name);
+        PlayerPrefs.Save();
         this.UpdateView();
     }
 
@@ -122,8 +141,11 @@ public class ShopController : MonoBehaviour
         this.next.onClick.AddListener(delegate {OnNextClick(); });
         this.prev.onClick.AddListener(delegate {OnPrevClick(); });
 
+        this.selectSpaceship.onClick.AddListener(delegate {OnSelectSpaceshipClick(); });
+
         this.boostHealth.onClick.AddListener(delegate {OnBoostClick(Property.Health); });
         this.boostAttack.onClick.AddListener(delegate {OnBoostClick(Property.Attack); });
+
 
         this.UpdateView();
     }
