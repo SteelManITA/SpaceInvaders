@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour
         controller.setDamage(damage);
         controller.setSpeed(0.3f);
         controller.tag = "BulletPlayer";
+        SoundManager.getInstance().Shot();
     }
 
     private Vector3 lastAcceleration = Vector3.right;

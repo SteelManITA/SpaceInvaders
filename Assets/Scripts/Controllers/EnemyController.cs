@@ -87,6 +87,7 @@ public class EnemyController : MonoBehaviour
                 }
 
                 StopAllCoroutines();
+                SoundManager.getInstance().Explosion();
                 Destroy(this.gameObject);
             }
         }
