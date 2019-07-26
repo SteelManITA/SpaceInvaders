@@ -5,7 +5,7 @@ public class RankListController : MonoBehaviour
 {
     private const int ITEM_HEIGHT = 70;
 
-    public Transform SpawnPoint = null;
+    public Transform spawnPoint = null;
     public GameObject item = null;
     public RectTransform content = null;
 
@@ -21,10 +21,10 @@ public class RankListController : MonoBehaviour
 
         for (int i = 0; i < numberOfItems; ++i) {
             float spawnY = i * ITEM_HEIGHT;
-            Vector3 pos = new Vector3(SpawnPoint.position.x, -spawnY, SpawnPoint.position.z);
+            Vector3 pos = new Vector3(spawnPoint.position.x, -spawnY, spawnPoint.position.z);
 
-            GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.rotation);
-            SpawnedItem.transform.SetParent(SpawnPoint, false);
+            GameObject SpawnedItem = Instantiate(item, pos, spawnPoint.rotation);
+            SpawnedItem.transform.SetParent(spawnPoint, false);
 
             RankListItem itemDetails = SpawnedItem.GetComponent<RankListItem>();
 
