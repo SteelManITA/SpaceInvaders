@@ -20,11 +20,11 @@ public static class ExtensionMethods
     public static Coroutine StartGameCoroutine(this MonoBehaviour monoBehaviour, IEnumerator routine)
     {
         return monoBehaviour.StartCoroutine(
-            GameCoroutineStart(routine)
+            _StartGameCoroutine(routine)
         );
     }
 
-    private static IEnumerator GameCoroutineStart(IEnumerator routine)
+    private static IEnumerator _StartGameCoroutine(IEnumerator routine)
     {
         while (routine.MoveNext()) {
             while (GameState.getInstance().getState() == GameState.State.Paused) {
