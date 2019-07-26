@@ -33,10 +33,10 @@ public class SaveScore : MonoBehaviour
                     0
                 )
             );
-            PlayerPrefs.SetInt("Credits", this.state.getScore());
-            GameState.getInstance().restart();
+            PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits", 0) + this.state.getScore());
 
             SceneManager.LoadScene("MainMenu");
+            GameState.getInstance().restart();
         }
     }
 }

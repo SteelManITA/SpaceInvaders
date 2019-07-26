@@ -15,7 +15,6 @@ public class ShopController : MonoBehaviour
     }
     private StorageSpaceship[] spaceships;
     private int currentIndex;
-    private int credit;
 
     public Button next;
     public Button prev;
@@ -132,11 +131,11 @@ public class ShopController : MonoBehaviour
     private void OnPurchaseClick()
     {
         StorageSpaceship spaceship = this.spaceships[this.currentIndex];
-        if (this.credit < spaceship.purchaseCost) {
+        if (PlayerPrefs.GetInt("Credits", 0) < spaceship.purchaseCost) {
             return;
         }
         spaceship.purchased = true;
-        this.credit -= spaceship.purchaseCost;
+        PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits") - spaceship.purchaseCost);
         StorageSpaceship.Write(spaceship);
         this.UpdateView();
     }
@@ -148,17 +147,19 @@ public class ShopController : MonoBehaviour
         switch (p) {
             case Property.Health: {
                 int boostCost = this.calcPowerupCost(spaceship.healthPowerUpsCount);
-                if (this.credit < boostCost) {
+                if (PlayerPrefs.GetInt("Credits", 0) < boostCost) {
                     return;
                 }
+                PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits") - boostCost);
                 ++spaceship.healthPowerUpsCount;
                 break;
             }
             case Property.Attack: {
                 int boostCost = this.calcPowerupCost(spaceship.attackPowerUpsCount);
-                if (this.credit < boostCost) {
+                if (PlayerPrefs.GetInt("Credits", 0) < boostCost) {
                     return;
                 }
+                PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits") - boostCost);
                 ++spaceship.attackPowerUpsCount;
                 break;
             }
@@ -174,7 +175,6 @@ public class ShopController : MonoBehaviour
     {
         this.spaceships = StorageSpaceship.GetAll();
         this.currentIndex = 0;
-        this.credit = PlayerPrefs.GetInt("Credits", 0);
 
         this.next.onClick.AddListener(delegate {OnNextClick(); });
         this.prev.onClick.AddListener(delegate {OnPrevClick(); });
