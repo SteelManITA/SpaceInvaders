@@ -15,8 +15,6 @@ public class Message : MonoBehaviour
     {
         GameState state = GameState.getInstance();
         int score = state.getScore();
-        int ranking = 0;
-        int players = 0;
-        this.message.text = "You scored " + score + " points.\n\nYou are the " + ranking + " in the ranking on " + players + " players";
+        this.message.text = "You scored " + score + " points.\n\nGo see the ranking to find out if you are in the top 20!";
     }
 }

@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneOnClick : MonoBehaviour
 {
-    private Button continueBtn;
+    private Button btn;
 
     public string scene = "MainMenu";
 
     void Start()
     {
-        this.continueBtn = GetComponent<Button>();
-        this.continueBtn.onClick.AddListener(delegate {OnContinueBtnClick(); });
+        this.btn = GetComponent<Button>();
+        this.btn.onClick.AddListener(delegate {OnBtnClick(); });
     }
 
-    void OnContinueBtnClick()
+    void OnBtnClick()
     {
         SceneManager.LoadScene(this.scene);
     }

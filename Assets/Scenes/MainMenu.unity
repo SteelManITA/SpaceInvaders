@@ -402,6 +402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 147433966}
   - component: {fileID: 147433967}
+  - component: {fileID: 147433968}
   m_Layer: 5
   m_Name: Accelerometer control
   m_TagString: Untagged
@@ -476,6 +477,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &147433968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147433965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91778e4260dea654ba65cdceb7f70cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prop: Accelerometer
 --- !u!1 &341336844
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +560,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rating
+  m_Text: Ranking
 --- !u!222 &341336847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -648,7 +662,7 @@ GameObject:
   - component: {fileID: 395461638}
   - component: {fileID: 395461637}
   m_Layer: 5
-  m_Name: Rating
+  m_Name: Ranking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -686,7 +700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966182af33a0d03438daabef339d3bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: Rating
+  scene: Ranking
 --- !u!114 &395461638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,6 +1158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 551792088}
   - component: {fileID: 551792089}
+  - component: {fileID: 551792090}
   m_Layer: 5
   m_Name: Music
   m_TagString: Untagged
@@ -1218,6 +1233,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &551792090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551792087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91778e4260dea654ba65cdceb7f70cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prop: Music
 --- !u!1 &698097120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,6 +1729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1076362650}
   - component: {fileID: 1076362651}
+  - component: {fileID: 1076362652}
   m_Layer: 5
   m_Name: Sound
   m_TagString: Untagged
@@ -1775,6 +1804,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &1076362652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076362649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91778e4260dea654ba65cdceb7f70cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prop: Sound
 --- !u!1 &1111379966
 GameObject:
   m_ObjectHideFlags: 0

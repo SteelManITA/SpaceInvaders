@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -119,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        bool accelerometer = true;
+        bool accelerometer = Convert.ToBoolean(PlayerPrefs.GetInt("Accelerometer", 0));
 
         if (accelerometer) {
             Vector3 acceleration = Input.acceleration * 0.3f;
@@ -127,7 +128,6 @@ public class PlayerController : MonoBehaviour
 
         } else {
             if (Input.GetMouseButton(0)) {
-                Debug.Log("input mousebutton");
                 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 direction = (mousePosition - transform.position).normalized;
                 (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
