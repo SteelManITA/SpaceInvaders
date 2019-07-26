@@ -16,7 +16,9 @@ public class BulletController : MonoBehaviour
     // per essere sicuri che si muova sempre alla stessa velocità e non a quella del framerate
     void FixedUpdate()
     {
-        this.bullet.position += Vector3.up * this.speed;
+        GetComponent<Rigidbody2D>().UpdateWithGameStatus();
+
+        (GetComponent<Rigidbody2D>()).velocity = new Vector2(0f, 50f * this.speed);
 
         if (
             this.bullet.position.y <= Constants.GetMinBoundY()

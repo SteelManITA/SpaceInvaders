@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     public GameObject shot;
     public GameObject powerUp;
 
+
+    private CoroutineController cc;
     void Start()
     {
         this.state = GameState.getInstance();
@@ -19,8 +21,13 @@ public class EnemyController : MonoBehaviour
         this.minBound = this.maxBound = this.enemy.position.x;
         this.model = new Enemy(this.state.getLevel());
         this.state.setEnemyDamage(this.model.getAttack());
-        StartCoroutine("Move");
-        StartCoroutine("Shot");
+        this.StartGameCoroutine(Move());
+        this.StartGameCoroutine(Shot());
+    }
+
+    void Update()
+    {
+        GetComponent<Rigidbody2D>().UpdateWithGameStatus();
     }
 
     IEnumerator Shot()
@@ -48,8 +55,11 @@ public class EnemyController : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f);
 
+        (GetComponent<Rigidbody2D>()).velocity = new Vector2(-this.model.getMovementSpeed(), 0);
+        yield return new WaitForSeconds(1.0f);
+
         while (true) {
-            this.enemy.position += Vector3.right * (direction * this.model.getMovementSpeed());
+            (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction * this.model.getMovementSpeed(), 0);
 
             if (
                 this.enemy.position.x < this.minBound
@@ -58,7 +68,7 @@ public class EnemyController : MonoBehaviour
                 direction = -direction;
             }
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(2.0f);
         }
     }
 

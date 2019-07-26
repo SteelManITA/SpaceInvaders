@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         this.state = GameState.getInstance();
 
         this.state.setPlayer(this.model);
-        StartCoroutine("Shot");
+        this.StartGameCoroutine(Shot());
     }
 
     IEnumerator Shot()
@@ -120,21 +120,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        bool accelerometer = Convert.ToBoolean(PlayerPrefs.GetInt("Accelerometer", 0));
+        GetComponent<Rigidbody2D>().UpdateWithGameStatus();
 
-        if (accelerometer) {
-            Vector3 acceleration = Input.acceleration * 0.3f;
-            (GetComponent<Rigidbody2D>()).velocity = new Vector2(acceleration.x * this.model.getMovementSpeed(), acceleration.y * this.model.getMovementSpeed());
+        if (GameState.getInstance().getState() == GameState.State.Started) {
+            bool accelerometer = Convert.ToBoolean(PlayerPrefs.GetInt("Accelerometer", 0));
 
-        } else {
-            if (Input.GetMouseButton(0)) {
-                mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                direction = (mousePosition - transform.position).normalized;
-                (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
+            if (accelerometer) {
+                Vector3 acceleration = Input.acceleration * 0.3f;
+                (GetComponent<Rigidbody2D>()).velocity = new Vector2(acceleration.x * this.model.getMovementSpeed(), acceleration.y * this.model.getMovementSpeed());
+
             } else {
-                (GetComponent<Rigidbody2D>()).velocity = Vector2.zero;
+                if (Input.GetMouseButton(0)) {
+                    mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    direction = (mousePosition - transform.position).normalized;
+                    (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
+                } else {
+                    (GetComponent<Rigidbody2D>()).velocity = Vector2.zero;
+                }
             }
         }
+
 
         if (
             this.player.position.x < this.minBound
@@ -154,6 +159,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "BulletEnemy") {
             this.model.hurt(other.gameObject.GetComponent<BulletController>().getDamage());
             if (!this.model.isAlive()) {
+                StopAllCoroutines();
                 Destroy(this.gameObject);
             }
         } else if (other.tag == "PowerUp") {

@@ -11,6 +11,13 @@ public class GameState
     private Player player;
     private int enemyDamage;
 
+    public enum State {
+        Started,
+        Paused,
+        Stopped
+    };
+    public State state;
+
     private GameState() {
         this.restart();
     }
@@ -57,5 +64,21 @@ public class GameState
 
     public int getEnemyDamage() {
         return this.enemyDamage;
+    }
+
+    public State getState() {
+        return this.state;
+    }
+
+    public void start() {
+        this.state = State.Started;
+    }
+
+    public void pause() {
+        this.state = State.Paused;
+    }
+
+    public void stop() {
+        this.state = State.Stopped;
     }
 }
