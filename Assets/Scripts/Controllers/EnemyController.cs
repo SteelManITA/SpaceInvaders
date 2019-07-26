@@ -12,8 +12,6 @@ public class EnemyController : MonoBehaviour
     public GameObject shot;
     public GameObject powerUp;
 
-
-    private CoroutineController cc;
     void Start()
     {
         this.state = GameState.getInstance();
