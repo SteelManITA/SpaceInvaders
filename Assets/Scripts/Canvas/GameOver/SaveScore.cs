@@ -25,8 +25,8 @@ public class SaveScore : MonoBehaviour
         if (username.text == "") {
             this.error.enabled = true;
         } else {
-            Ranking.Write(
-                new Ranking(
+            StorageRanking.Write(
+                new StorageRanking(
                     this.username.text,
                     this.state.getScore(),
                     this.state.getLevel(),

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Ranking
+public class StorageRanking
 {
     public string playerName;
     public int score;
     public int level;
     public float time;
 
-    public Ranking(
+    public StorageRanking(
         string playerName,
         int score,
         int level,
@@ -24,9 +24,9 @@ public class Ranking
         this.time = time;
     }
 
-    public static void Write(Ranking currentRanking)
+    public static void Write(StorageRanking currentRanking)
     {
-        Ranking[] rankings = Ranking.GetAll();
+        StorageRanking[] rankings = StorageRanking.GetAll();
 
         if (rankings.Length < 20) {
             int len = rankings.Length;
@@ -42,19 +42,19 @@ public class Ranking
         PlayerPrefs.Save();
     }
 
-    public static Ranking[] GetAll()
+    public static StorageRanking[] GetAll()
     {
         string rankingsString = PlayerPrefs.GetString("Rankings", "");
 
         if (rankingsString == "") {
-            return new Ranking[0];
+            return new StorageRanking[0];
         }
 
-        Ranking[] rankings = JsonHelper.FromJson<Ranking>(rankingsString);
+        StorageRanking[] rankings = JsonHelper.FromJson<StorageRanking>(rankingsString);
 
-        Array.Sort<Ranking>(
+        Array.Sort<StorageRanking>(
             rankings,
-            new Comparison<Ranking>(
+            new Comparison<StorageRanking>(
                 (r1, r2) => r2.score.CompareTo(r1.score)
             )
         );

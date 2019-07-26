@@ -9,11 +9,11 @@ public class RankListController : MonoBehaviour
     public GameObject item = null;
     public RectTransform content = null;
 
-    private Ranking[] rankings;
+    private StorageRanking[] rankings;
 
 	void Start ()
     {
-        this.rankings = Ranking.GetAll();
+        this.rankings = StorageRanking.GetAll();
 
         int numberOfItems = this.rankings.Length;
 
