@@ -14,6 +14,6 @@ public class Time : MonoBehaviour
     void Update()
     {
         int time = (int) GameState.getInstance().getTime();
-        this.timeText.text = "Time: " + time;
+        this.timeText.text = "Time: " + Utils.TimeToString(time);
     }
 }
