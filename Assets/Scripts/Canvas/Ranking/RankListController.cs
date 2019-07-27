@@ -28,7 +28,7 @@ public class RankListController : MonoBehaviour
 
             RankListItem itemDetails = SpawnedItem.GetComponent<RankListItem>();
 
-            itemDetails.ranking.text = ""+i;
+            itemDetails.ranking.text = ""+(i+1);
             itemDetails.playerName.text = rankings[i].playerName;
             itemDetails.score.text = "Score: " + rankings[i].score;
             itemDetails.level.text = "Level: " + rankings[i].level;
