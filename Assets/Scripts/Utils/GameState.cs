@@ -20,6 +20,7 @@ public class GameState
     public State state;
 
     private GameState() {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         this.restart();
     }
 
