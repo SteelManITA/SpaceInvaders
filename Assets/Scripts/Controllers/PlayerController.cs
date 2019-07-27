@@ -175,6 +175,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "BulletEnemy") {
             this.model.hurt(other.gameObject.GetComponent<BulletController>().getDamage());
             if (!this.model.isAlive()) {
+                this.state.stop();
                 StopAllCoroutines();
                 Destroy(this.gameObject);
             }
