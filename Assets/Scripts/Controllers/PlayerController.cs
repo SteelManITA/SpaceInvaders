@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         );
 
         this.state = GameState.getInstance();
+        this.state.restart();
 
         this.state.setPlayer(this.model);
         this.StartGameCoroutine(Shot());

@@ -36,7 +36,6 @@ public class SaveScore : MonoBehaviour
             PlayerPrefs.SetInt("Credits", PlayerPrefs.GetInt("Credits", 0) + this.state.getScore());
 
             SceneManager.LoadScene("MainMenu");
-            GameState.getInstance().restart();
         }
     }
 }
