@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy : Spaceship
 {
-    private float dropRate = 0.1f;
+    private float dropRate = 0.03f;
 
     public Enemy(
         int level
     ) {
         this.totalHealth = (int) (200 * (1.1f * level));
-        this.attack = 100;
+        this.attack = 100 + (15 * level);
         this.fireDelay = this.setFireDelay(level);
         this.movementSpeed = 0.5f;
     }
