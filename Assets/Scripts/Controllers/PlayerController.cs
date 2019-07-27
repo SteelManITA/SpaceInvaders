@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -146,7 +147,7 @@ public class PlayerController : MonoBehaviour
                 (GetComponent<Rigidbody2D>()).velocity = new Vector2(acceleration.x * this.model.getMovementSpeed(), acceleration.y * this.model.getMovementSpeed());
 
             } else {
-                if (Input.GetMouseButton(0)) {
+                if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()) {
                     mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     direction = (mousePosition - transform.position).normalized;
                     (GetComponent<Rigidbody2D>()).velocity = new Vector2(direction.x * this.model.getMovementSpeed(), direction.y * this.model.getMovementSpeed());
