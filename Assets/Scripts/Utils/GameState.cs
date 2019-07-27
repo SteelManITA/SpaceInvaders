@@ -69,14 +69,6 @@ public class GameState
         return this.player;
     }
 
-    public void setEnemyDamage(int damage) {
-        this.enemyDamage = damage;
-    }
-
-    public int getEnemyDamage() {
-        return this.enemyDamage;
-    }
-
     public State getState() {
         return this.state;
     }

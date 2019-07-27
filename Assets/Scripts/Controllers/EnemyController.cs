@@ -18,7 +18,6 @@ public class EnemyController : MonoBehaviour
         this.enemy = GetComponent<Transform>();
         this.minBound = this.maxBound = this.enemy.position.x;
         this.model = new Enemy(this.state.getLevel());
-        this.state.setEnemyDamage(this.model.getAttack());
         this.StartGameCoroutine(Move());
         this.StartGameCoroutine(Shot());
     }
