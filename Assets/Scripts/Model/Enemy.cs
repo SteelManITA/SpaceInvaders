@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Spaceship
+public class Enemy : Spaceship, IEnemy
 {
-    private float dropRate = 0.03f;
+    protected float dropRate = 0.03f;
+    protected int score = 100;
+
+    public Enemy()
+    {
+    }
 
     public Enemy(
         int level
     ) {
-        this.totalHealth = (int) (200 * (1.1f * level));
+        this.health = this.totalHealth = (int) (200 * (1.1f * level));
         this.attack = 100 + (15 * level);
         this.fireDelay = this.setFireDelay(level);
         this.movementSpeed = 0.5f;
@@ -29,5 +34,9 @@ public class Enemy : Spaceship
 
     public float getDropRate() {
         return this.dropRate;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 }

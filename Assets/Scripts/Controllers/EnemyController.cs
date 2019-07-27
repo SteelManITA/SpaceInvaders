@@ -4,32 +4,36 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private Transform enemy;
-    private float minBound, maxBound;
-    private Enemy model;
+    protected Transform enemy;
+    protected float minBound, maxBound;
+    protected IEnemy model;
     private Vector3 startPosition;
-    private GameState state;
+    protected GameState state;
 
     public GameObject shot;
     public GameObject powerUp;
 
-    void Start()
+    protected virtual void Awake()
     {
         this.state = GameState.getInstance();
         this.enemy = GetComponent<Transform>();
         this.minBound = this.maxBound = this.enemy.position.x;
         this.model = new Enemy(this.state.getLevel());
         this.startPosition = this.enemy.position;
+    }
+
+    protected void Start()
+    {
         this.StartGameCoroutine(ComeInScene());
         this.StartGameCoroutine(Shot());
     }
 
-    void Update()
+    protected virtual void Update()
     {
         GetComponent<Rigidbody2D>().UpdateWithGameStatus();
     }
 
-    IEnumerator WaitForShot(float time)
+    protected IEnumerator WaitForShot(float time)
     {
         while (time > 0) {
             while (GameState.getInstance().getState() != GameState.State.Started) {
@@ -40,7 +44,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    IEnumerator Shot()
+    protected virtual IEnumerator Shot()
     {
         yield return WaitForShot(1.0f + Random.value * this.model.getFireDelay());
 
@@ -69,7 +73,7 @@ public class EnemyController : MonoBehaviour
         yield return Move();
     }
 
-    IEnumerator Move()
+    protected virtual IEnumerator Move()
     {
         int direction = 1;
 
@@ -92,11 +96,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
+    protected virtual void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "BulletPlayer") {
             this.model.hurt(this.state.getPlayer().getAttack());
             if (!this.model.isAlive()) {
-                this.state.incrementScore(100);
+                this.state.incrementScore(this.model.getScore());
 
                 if (Random.value < this.model.getDropRate()) {
                     Instantiate(

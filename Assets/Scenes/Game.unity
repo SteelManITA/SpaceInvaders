@@ -2271,6 +2271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7879894000050255070, guid: 6dfcb707e908f7341807b6d1d73a2174, type: 3}
+  boss: {fileID: 2627497936909897747, guid: 59fc5f3fa60487a41acd702b2bb8391d, type: 3}
 --- !u!4 &1990009250
 Transform:
   m_ObjectHideFlags: 0
