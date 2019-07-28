@@ -29,6 +29,7 @@ public class GameState
     }
 
     public void restart() {
+        this.start();
         this.score = 0;
         this.level = 1;
         this.time = 0f;
