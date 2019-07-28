@@ -59,24 +59,37 @@ public class BossController : EnemyController
         sh.shieldOffset = shieldOffset;
     }
 
+    void CheckForActivateShield()
+    {
+        int older = 0;
+        for (int i = 1; i < 3; ++i) {
+            older = this.hittedTime[i] < this.hittedTime[older] ? i : older;
+        }
+
+        this.hittedTime[older] = UnityEngine.Time.time;
+        this.lastTime = UnityEngine.Time.time;
+
+        for (int i = 0; i < 3; ++i) {
+            if (UnityEngine.Time.time - this.hittedTime[i] > 2f) {
+                return;
+            }
+        }
+        ActivateShield();
+    }
+
     override protected void OnTriggerEnter2D(Collider2D other) {
         base.OnTriggerEnter2D(other);
 
         if (other.tag == "BulletPlayer") {
-            int older = 0;
-            for (int i = 1; i < 3; ++i) {
-                older = this.hittedTime[i] < this.hittedTime[older] ? i : older;
+            if (Random.value < this.model.getDropRate()) {
+                Instantiate(
+                    this.powerUp,
+                    this.enemy.position,
+                    this.enemy.rotation
+                );
             }
 
-            this.hittedTime[older] = UnityEngine.Time.time;
-            this.lastTime = UnityEngine.Time.time;
-
-            for (int i = 0; i < 3; ++i) {
-                if (UnityEngine.Time.time - this.hittedTime[i] > 2f) {
-                    return;
-                }
-            }
-            ActivateShield();
+            CheckForActivateShield();
         }
     }
 }

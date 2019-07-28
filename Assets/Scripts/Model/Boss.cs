@@ -23,9 +23,9 @@ public class Boss : Enemy
     ) {
         this.health = this.totalHealth = 1000 * level;
         this.attack = 100 + (15 * level);
-        this.fireDelay = 1f;
+        this.fireDelay = Mathf.Max(0.2f, 1f - ((level/5) - 1) * 0.2f);
         this.movementSpeed = 0.5f;
-        this.dropRate = 1f;
+        this.dropRate = .08f;
         this.score = 1000;
     }
 
