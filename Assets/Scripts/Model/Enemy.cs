@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Spaceship, IEnemy
 {
-    protected float dropRate = 0.03f;
+    protected float dropRate = 0.08f;
     protected int score = 100;
 
     public Enemy()
