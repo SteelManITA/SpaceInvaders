@@ -38,6 +38,8 @@ public class TutorialController : MonoBehaviour
     {
         if (this.currentScreen == VIEWS_COUNT - 1) {
             SceneManager.LoadScene("Game");
+            PlayerPrefs.SetInt("PlayedTutorial", 1);
+            PlayerPrefs.Save();
         } else {
             ++this.currentScreen;
         }
