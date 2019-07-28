@@ -33,7 +33,11 @@ public class StorageRanking
             Array.Resize(ref rankings, len + 1);
             rankings[len] = currentRanking;
         } else {
-            rankings[19] = currentRanking;
+            if (rankings[19].score < currentRanking.score) {
+                rankings[19] = currentRanking;
+            } else {
+                return;
+            }
         }
 
         string json = JsonHelper.ToJson(rankings, true);
