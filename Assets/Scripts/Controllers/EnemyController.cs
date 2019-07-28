@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     private Transform enemy;
     private float minBound, maxBound;
     private Enemy model;
+    private Vector3 startPosition;
     private GameState state;
 
     public GameObject shot;
@@ -18,7 +19,8 @@ public class EnemyController : MonoBehaviour
         this.enemy = GetComponent<Transform>();
         this.minBound = this.maxBound = this.enemy.position.x;
         this.model = new Enemy(this.state.getLevel());
-        this.StartGameCoroutine(Move());
+        this.startPosition = this.enemy.position;
+        this.StartGameCoroutine(ComeInScene());
         this.StartGameCoroutine(Shot());
     }
 
@@ -56,6 +58,15 @@ public class EnemyController : MonoBehaviour
 
             yield return WaitForShot(this.model.getFireDelay());
         }
+    }
+
+    IEnumerator ComeInScene()
+    {
+        while (this.enemy.position.y > this.startPosition.y - 11) {
+            this.enemy.position += new Vector3(0, -0.2f, 0);
+            yield return new WaitForSeconds(.001f);
+        }
+        yield return Move();
     }
 
     IEnumerator Move()

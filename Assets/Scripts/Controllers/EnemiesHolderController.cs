@@ -13,7 +13,7 @@ public class EnemiesHolderController : MonoBehaviour
         for (int i = 0; i < this.enemies; ++i) {
             Instantiate(
                 this.enemy,
-                this.enemiesHolder.position + new Vector3(i/5, i%5 * 1.5f, 0),
+                this.enemiesHolder.position + new Vector3(i/5, i%5 * 1.5f, 0) + new Vector3(0f, 11f, 0f),
                 Quaternion.identity,
                 this.enemiesHolder
             );
