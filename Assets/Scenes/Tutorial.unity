@@ -1126,7 +1126,7 @@ MonoBehaviour:
   m_Text: 'Enemies drop PowerUps.
 
 
-    Pickup all of them to became invincible!'
+    Pickup all of them to become invincible!'
 --- !u!222 &726725777
 CanvasRenderer:
   m_ObjectHideFlags: 0
